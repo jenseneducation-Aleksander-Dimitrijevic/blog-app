@@ -1,13 +1,22 @@
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
 module.exports = {
   auth(req, res, next) {
-    const bearer = req.headers["authorization"];
-    if (typeof bearer !== "undefined") {
-      const bearerHeader = bearer.split(" ");
-      const bearerToken = bearerHeader[1];
-      req.token = bearerToken;
-      next();
+    const token = req.headers.authorization;
+    if (!token) {
+      return false;
     } else {
-      res.status(401).json({ message: "Unauthorized" });
+      try {
+        const verify = jwt.verify(
+          token.replace("Bearer ", ""),
+          process.env.SECRET
+        );
+        req.user = verify;
+      } catch (error) {
+        console.log(error);
+      }
     }
+    next();
   },
 };

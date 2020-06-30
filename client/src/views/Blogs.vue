@@ -1,6 +1,6 @@
 <template>
-  <article>
-    <h1>{{ !isBlogCreated ? "No posts" : "All post(s)" }}</h1>
+  <article v-if="blogs">
+    <h1>{{ !blogs.length > 0 ? "No posts" : "All post(s)" }}</h1>
     <section class="blog-card" v-for="blog in blogs" :key="blog.id">
       <h2 class="blog-title">{{ blog.title }}</h2>
       <p class="blog-text">{{ blog.text }}</p>
@@ -16,7 +16,7 @@ export default {
   name: "blogs",
   data() {
     return {
-      blogs: null,
+      blogs: null
     };
   },
   created() {
@@ -24,7 +24,7 @@ export default {
       this.blogs = data;
     });
   },
-  computed: { ...mapGetters(["isBlogCreated"]) },
+  computed: { ...mapGetters(["isBlogCreated"]) }
 };
 </script>
 

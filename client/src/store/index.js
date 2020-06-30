@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: null,
+    storedBlogs: [],
     createdBlogs: [],
   },
   mutations: {
@@ -16,11 +17,9 @@ export default new Vuex.Store({
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${userData.token}`;
-      console.log(state.user);
     },
     SET_BLOG(state, blogData) {
-      state.createdBlogs = [...state.createdBlogs, blogData];
-      console.log(state.createdBlogs);
+      state.createdBlogs.push(blogData);
     },
   },
   actions: {

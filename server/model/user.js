@@ -11,14 +11,14 @@ module.exports = {
     const user = await users.findOne({ email });
     if (user) return;
     if (password !== repeatPassword) return;
-    await users.insert({
+    const newUser = await users.insert({
       name,
       email,
       password: await bcrypt.hash(password, 10),
     });
     const token = jwt.sign(
       {
-        name,
+        userID: newUser._id,
         email,
       },
       process.env.SECRET
@@ -30,7 +30,7 @@ module.exports = {
     };
   },
 
-  async login({ email, password }) {
+  async verify({ email, password }) {
     if (email == "" || password == "") return;
     const user = await users.findOne({ email });
     if (!user) return;
@@ -38,7 +38,7 @@ module.exports = {
     if (passwordMatch) {
       const token = jwt.sign(
         {
-          name: user.name,
+          userID: user._id,
           email,
         },
         process.env.SECRET
@@ -50,12 +50,5 @@ module.exports = {
       };
     }
     return;
-  },
-
-  dashboard(token) {
-    return jwt.verify(token, process.env.SECRET, (err) => {
-      if (err) return;
-      return "You are logged in!";
-    });
   },
 };

@@ -5,19 +5,27 @@ module.exports = {
   async all() {
     return await blogs.find({});
   },
-  async create({ title, text }) {
+  async getUserBlogs(userID) {
+    return await blogs.find({ owner: userID });
+  },
+  async create(input, userID) {
+    const { title, text } = input;
     if (title == "" || text == "") return;
-    const blog = await blogs.insert({
+    const newBlog = await blogs.insert({
+      owner: userID,
       title,
       text,
       createdAt: new Date(),
     });
 
-    return {
-      id: blog._id,
-      title,
-      text,
-      createdAt: new Date(),
-    };
+    if (newBlog._id === userID) {
+      return {
+        owner: userID,
+        title,
+        text,
+        createdAt: new Date(),
+      };
+    }
+    return;
   },
 };
