@@ -1,0 +1,31 @@
+<template>
+  <article>
+    <h1>{{ !isBlogCreated ? "No posts" : "All post(s)" }}</h1>
+    <section class="blog-card" v-for="blog in blogs" :key="blog.id">
+      <h2 class="blog-title">{{ blog.title }}</h2>
+      <p class="blog-text">{{ blog.text }}</p>
+      <span class="createdAt">Created at:{{ blog.createdAt }}</span>
+    </section>
+  </article>
+</template>
+
+<script>
+import { mapGetters } from "vuex";
+import axios from "axios";
+export default {
+  name: "blogs",
+  data() {
+    return {
+      blogs: null,
+    };
+  },
+  created() {
+    axios.get("//localhost:5000/api/blogs").then(({ data }) => {
+      this.blogs = data;
+    });
+  },
+  computed: { ...mapGetters(["isBlogCreated"]) },
+};
+</script>
+
+<style lang="scss" scoped></style>
