@@ -18,4 +18,22 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
+router.post("/update", auth, async (req, res) => {
+  const editBlog = await blog.updateBlog(req.body);
+  if (editBlog) {
+    res.status(201).json(editBlog);
+  } else {
+    res.status(400).json({ message: "Post not updated" });
+  }
+});
+
+router.post("/delete", auth, async (req, res) => {
+  const deleteBlog = await blog.deleteBlog(req.body._id);
+  if (deleteBlog) {
+    res.status(201).json(deleteBlog);
+  } else {
+    res.status(400).json({ message: "Post not deleted" });
+  }
+});
+
 module.exports = router;

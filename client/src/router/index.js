@@ -39,6 +39,13 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/blogs/edit/:id",
+    name: "edit",
+    props: true,
+    component: () => import("@/views/Edit.vue"),
+    meta: { requiresAuth: true },
+  },
+  {
     path: "*",
     name: "404",
     component: () => import("@/views/404.vue"),

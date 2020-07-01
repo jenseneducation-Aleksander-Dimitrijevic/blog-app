@@ -7,7 +7,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: null,
-    storedBlogs: [],
     createdBlogs: [],
   },
   mutations: {
@@ -41,6 +40,13 @@ export default new Vuex.Store({
       axios.post("//localhost:5000/api/blogs", blog).then(({ data }) => {
         commit("SET_BLOG", data);
       });
+    },
+    updateBlog({ commit }, blog) {
+      return axios
+        .post("//localhost:5000/api/blogs/update", blog)
+        .then(({ data }) => {
+          commit("SET_BLOG", data);
+        });
     },
   },
   getters: {

@@ -15,7 +15,6 @@ router.post("/register", async (req, res) => {
 router.get("/dashboard", auth, (req, res) => {
   const isAuth = user.verify(req.body);
   if (isAuth) {
-    console.log(req.user);
     res.json(isAuth);
   }
 });

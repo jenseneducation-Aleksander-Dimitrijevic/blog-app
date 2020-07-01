@@ -18,14 +18,28 @@ module.exports = {
       createdAt: new Date(),
     });
 
-    if (newBlog._id === userID) {
-      return {
-        owner: userID,
-        title,
-        text,
-        createdAt: new Date(),
-      };
-    }
+    return {
+      owner: userID,
+      blogID: newBlog._id,
+      title,
+      text,
+      createdAt: new Date(),
+    };
     return;
+  },
+
+  async updateBlog({ id, body }) {
+    let blog = await blogs.findOne(
+      { _id: id },
+      { $set: { title: body.title, text: body.text } }
+    );
+    blog = await blogs.update(blog, {
+      $set: { title: body.title, text: body.text },
+    });
+    return blog;
+  },
+
+  async deleteBlog(id) {
+    return await blogs.remove({ _id: id });
   },
 };

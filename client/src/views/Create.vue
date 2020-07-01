@@ -8,12 +8,7 @@
       </div>
       <div class="form-group">
         <label for="text">Blog text</label>
-        <textarea
-          type="text"
-          v-model="input.text"
-          id="text"
-          name="text"
-        ></textarea>
+        <textarea type="text" v-model="input.text" id="text" name="text"></textarea>
       </div>
       <button>Save</button>
     </form>
@@ -26,9 +21,9 @@ export default {
   data() {
     return {
       input: {
-        title: "",
-        text: "",
-      },
+        title: this.blog ? this.blog.title : "",
+        text: this.blog ? this.blog.text : ""
+      }
     };
   },
   methods: {
@@ -36,8 +31,8 @@ export default {
       this.$store
         .dispatch("createBlog", this.input)
         .then(() => this.$router.push({ name: "blogs" }));
-    },
-  },
+    }
+  }
 };
 </script>
 
