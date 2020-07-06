@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "navbar",
   computed: { ...mapGetters(["loggedIn"]) },
@@ -38,10 +37,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-nav {
-  ul {
-    list-style: none;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

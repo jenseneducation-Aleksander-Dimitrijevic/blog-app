@@ -1,18 +1,41 @@
 <template>
-  <div>
-    <h1>Create new blog</h1>
-    <form @submit.prevent="createBlog">
-      <div class="form-group">
-        <label for="title">Blog title</label>
-        <input type="text" v-model="input.title" id="title" name="title" />
-      </div>
-      <div class="form-group">
-        <label for="text">Blog text</label>
-        <textarea type="text" v-model="input.text" id="text" name="text"></textarea>
-      </div>
-      <button>Save</button>
-    </form>
-  </div>
+  <v-container fill-height>
+    <v-row>
+      <v-col>
+        <v-form
+          ref="createBlogForm"
+          v-model="formValidity"
+          @submit.prevent="createBlog"
+        >
+          <h1 class="mb-4">Create new blog</h1>
+          <v-text-field
+            type="text"
+            required
+            :rules="titleRules"
+            v-model="input.title"
+            label="Blog title"
+            name="title"
+          />
+          <v-textarea
+            type="text"
+            required
+            :rules="textRules"
+            v-model="input.text"
+            label="Blog text"
+            name="text"
+          />
+          <v-btn
+            :disabled="!formValidity"
+            class="mt-4"
+            type="submit"
+            color="info"
+            dark
+            >Save</v-btn
+          >
+        </v-form>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -20,10 +43,13 @@ export default {
   name: "create",
   data() {
     return {
+      formValidity: true,
       input: {
         title: this.blog ? this.blog.title : "",
-        text: this.blog ? this.blog.text : ""
-      }
+        text: this.blog ? this.blog.text : "",
+      },
+      titleRules: [(value) => !!value || "Title is required"],
+      textRules: [(value) => !!value || "Text is required"],
     };
   },
   methods: {
@@ -31,8 +57,8 @@ export default {
       this.$store
         .dispatch("createBlog", this.input)
         .then(() => this.$router.push({ name: "blogs" }));
-    }
-  }
+    },
+  },
 };
 </script>
 

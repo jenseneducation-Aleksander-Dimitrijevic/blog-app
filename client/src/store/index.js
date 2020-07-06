@@ -24,26 +24,34 @@ export default new Vuex.Store({
   actions: {
     registerUser({ commit }, credentials) {
       return axios
-        .post("//localhost:5000/api/users/register", credentials)
+        .post(
+          "https://blogsite-demo.herokuapp.com/api/users/register",
+          credentials
+        )
         .then(({ data }) => {
           commit("SET_USER_DATA", data);
         });
     },
     loginUser({ commit }, credentials) {
       return axios
-        .post("//localhost:5000/api/users/login", credentials)
+        .post(
+          "https://blogsite-demo.herokuapp.com/api/users/login",
+          credentials
+        )
         .then(({ data }) => {
           commit("SET_USER_DATA", data);
         });
     },
     createBlog({ commit }, blog) {
-      axios.post("//localhost:5000/api/blogs", blog).then(({ data }) => {
-        commit("SET_BLOG", data);
-      });
+      axios
+        .post("https://blogsite-demo.herokuapp.com/api/blogs", blog)
+        .then(({ data }) => {
+          commit("SET_BLOG", data);
+        });
     },
     updateBlog({ commit }, blog) {
       return axios
-        .post("//localhost:5000/api/blogs/update", blog)
+        .post("https://blogsite-demo.herokuapp.com/api/blogs/update", blog)
         .then(({ data }) => {
           commit("SET_BLOG", data);
         });
