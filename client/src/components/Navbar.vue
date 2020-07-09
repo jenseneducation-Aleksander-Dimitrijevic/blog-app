@@ -31,9 +31,8 @@ export default {
     logout() {
       localStorage.removeItem("user");
       location.reload();
-      this.$router.push({ name: "Home" });
-    },
-  },
+    }
+  }
 };
 </script>
 
