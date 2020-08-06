@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "navbar",
   computed: { ...mapGetters(["loggedIn"]) },
@@ -32,16 +31,9 @@ export default {
     logout() {
       localStorage.removeItem("user");
       location.reload();
-      this.$router.push({ name: "Home" });
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped>
-nav {
-  ul {
-    list-style: none;
-  }
-}
-</style>
+<style lang="scss" scoped></style>
